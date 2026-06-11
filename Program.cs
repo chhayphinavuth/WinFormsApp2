@@ -12,6 +12,7 @@ namespace WinFormsApp2
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new FrmMain());
+            //Application.Run(new Form8());
         }
     }
 }

@@ -59,25 +59,31 @@ namespace WinFormsApp2
             ;
 
         }
+        
+        //Create Sqlserver Connection
+
+        SqlConnection MyConn = new();
 
         private void ButCheckConnection_Click(object sender, EventArgs e)
         {
-            SqlConnection MyConn =new();
-
+            
             string MyServer = CboServer.Text.ToString();
             string MyDb = CboDatabase.Text.ToString();
             string MyUserID = TxtUserID.Text.ToString();
             string MyPwd = TxtPwd.Text.ToString();
+            
             string StrMyConn_WindAuth=
                 $"Server={MyServer}; " +
                 $"Database={MyDb}; " +
+                "Integrated Security=True;" +
                 "Encrypt=True; " +
                 "TrustServerCertificate=True; ";
             
             string StrMyConn_SqlAuth =
                 $"Server={MyServer}; " +
                 $"Database={MyDb}; " +
-                $"User id={MyUserID}; Password={MyPwd}; " +
+                $"User id={MyUserID}; " +
+                $"Password={MyPwd}; " +
                 "Encrypt=True; " +
                 "TrustServerCertificate=True; ";
 
@@ -88,29 +94,61 @@ namespace WinFormsApp2
             if(str_auth == "Windows Authentication")
             {
                 //Do any thing
-                
-                //Normal sample
-                //MyConn = new SqlConnection(StrMyConn_WindAuth);
 
                 //Alwasys use using statements to ensure connections are properly closed and disposed
-                using (MyConn = new SqlConnection(StrMyConn_WindAuth)) {
-                    MyConn.Open();
-                    if (MyConn.State != ConnectionState.Open)
+                try
+                {
+                    using (MyConn = new SqlConnection(StrMyConn_WindAuth))
                     {
-                        //MyConn.Close();
-                        //return;
-                    }
+                        MyConn.Open();
 
-                    if (str_auth == "SQL Server Authentication")
-                    {
-                        //Do any thing
-                        //MyConn.Close();
-                        //return;
+                        MessageBox.Show(
+                            "Your database is connected with Windows Authentication",
+                            "Confirm message",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                        );
                     }
-
-                }                
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        "Your database is not connected with Windows Authentication.\n\nError: " + ex.Message,
+                        "Confirm message",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                }
+          
             }
+            else
+            {
 
+                try
+                {
+                    using (MyConn = new SqlConnection(StrMyConn_SqlAuth))
+                    {
+                        MyConn.Open();
+
+                        MessageBox.Show(
+                            "Your database is connected with Sqlserver Authentication",
+                            "Confirm message",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                        );
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        "Your database is not connected with Sqlserver Authentication.\n\nError: " + ex.Message,
+                        "Confirm message",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                }
+
+            }
             
 
             //switch (str_auth)
