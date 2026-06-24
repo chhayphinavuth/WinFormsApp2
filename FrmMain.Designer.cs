@@ -98,9 +98,9 @@
             uiTabControlMain.SelectedIndex = 0;
             uiTabControlMain.Size = new Size(1059, 600);
             uiTabControlMain.SizeMode = TabSizeMode.Fixed;
-            uiTabControlMain.TabBackColor = Color.ForestGreen;
+            uiTabControlMain.TabBackColor = Color.Goldenrod;
             uiTabControlMain.TabIndex = 4;
-            uiTabControlMain.TabSelectedColor = Color.MistyRose;
+            uiTabControlMain.TabSelectedColor = Color.WhiteSmoke;
             // 
             // tabPageLogIn
             // 
